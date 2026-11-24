@@ -1,0 +1,84 @@
+/* Narrow-screen and table rules for this tool's own interface.
+
+   The shared kit dresses a calculator: a column of fields and one result. A
+   till has repeating rows of bill lines and buyers, a register with fifteen
+   columns, and a page that has to come out of a printer. These rules let those
+   shrink with the screen and print cleanly. Nothing here restyles the kit. */
+
+/* Grid and flex children default to min-width:auto, which refuses to shrink
+   below their content. A card holding a wide table would otherwise stretch the
+   whole page sideways. */
+.cols > *, .row2 > *, .rowgrid > * { min-width: 0; }
+
+/* Two fields side by side need the room for it. */
+@media (max-width: 620px) { .row2 { grid-template-columns: 1fr; } }
+
+/* A table that will not fit scrolls inside its own card rather than widening
+   the page. One narrow enough for the screen still fills the card as before. */
+.table-scroll { overflow-x: auto; }
+
+/* Repeating rows: bill lines and qualified buyers. Each row is a grid that
+   collapses to a single column on a phone. */
+.rows { display: grid; gap: 8px; }
+.rowgrid { display: grid; gap: 8px; align-items: start; }
+.rowgrid .field { margin: 0; }
+.line { grid-template-columns: 1.6fr 1fr 1fr auto; }
+.buyer { grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr auto; }
+@media (max-width: 860px) {
+  .line, .buyer { grid-template-columns: 1fr 1fr; }
+  .rowgrid { padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 480px) {
+  .line, .buyer { grid-template-columns: 1fr; }
+}
+
+/* The remove button sits with the fields rather than towering over them. */
+.rowgrid .btn.drop { padding: 11px 12px; width: 100%; }
+
+/* The itemised share only applies on an itemised bill, so it is hidden on a
+   per-head one rather than inviting a figure nothing will use. */
+.buyer.perhead .y-sharecell { display: none; }
+
+/* Controls the kit's input rules do not reach. */
+input[type="date"] { width: 100%; max-width: 100%; }
+
+/* A tighter button row inside a field, and a little air above a heading that
+   follows a table. */
+.btnrow.tight { margin-top: 0; }
+.spaced { margin-top: 22px; }
+
+/* Tabs wrap on a phone instead of scrolling off the side. */
+.tabs { margin: 18px 0 6px; }
+
+/* Breakdown rows carry a step of the working: an emphasised one is the figure
+   that matters, and the authority sits under the label in small type. */
+.breakdown tr.key td { font-weight: 700; }
+.breakdown td .why { display: block; font-size: .78rem; color: var(--ink-3); font-weight: 400; }
+.breakdown caption { caption-side: top; text-align: left; font-size: .82rem; color: var(--ink-3); padding-bottom: 8px; }
+.breakdown th.num, .breakdown td.num { white-space: nowrap; }
+
+/* One qualified buyer's figures, under the working. */
+.buyercard { border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-top: 12px; }
+.buyercard h3 { margin: 0 0 2px; font-size: .95rem; }
+.buyercard .meta { font-family: var(--mono); font-size: .76rem; color: var(--ink-3); }
+
+/* The banner is the kit's note; it turns green when it is reporting that
+   something was saved rather than warning about it. */
+.note.ok { border-left-color: var(--ok); color: var(--ink-2); }
+.note ul { margin: 0; padding-left: 18px; }
+.note li + li { margin-top: 6px; }
+
+/* A caption that is read out but not drawn, where the heading above already
+   says what the table is. */
+.vis-caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* The printed register: the chrome goes, the heading comes, and the table
+   borders stay so the columns are readable on paper. */
+.printhead { font-size: .85rem; color: var(--ink-2); margin-bottom: 10px; }
+@media print {
+  .tabs, .rows, .note, details, #banner { display: none; }
+  .printhead { display: block; }
+  .table-scroll { overflow: visible; }
+  .breakdown { font-size: .72rem; }
+  .breakdown th, .breakdown td { padding: 3px 4px; }
+}

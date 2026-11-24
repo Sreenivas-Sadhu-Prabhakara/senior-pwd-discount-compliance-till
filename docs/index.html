@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'">
+  <title>Senior citizen and PWD discount till and sales register · Open MSME</title>
+  <meta name="description" content="A free single-binary tool for Philippine establishments: work out the 20% senior citizen and PWD discount on the amount net of 12% VAT, in the order BIR requires, split a shared bill per head, and keep the statutory sales record with period totals of the discounts granted.">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="Senior citizen and PWD discount till and sales register · Open MSME">
+  <meta property="og:description" content="VAT off first, then 20% — the order the regulations require. Keeps the statutory sales record and totals the discounts granted. One offline binary; your data stays on your machine.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/accent.css">
+  <script src="assets/theme-init.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">
+        <span class="dot"></span><b>Open MSME</b><span class="tag">senior / PWD till</span>
+      </a>
+      <span class="sp"></span>
+      <a class="home" href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+      <button class="themer" data-themer type="button">Theme</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Tourism &amp; hospitality · Philippines</div>
+        <h1>Senior citizen and PWD discount till and sales register for restaurants</h1>
+        <p class="lede">A qualified senior citizen or person with disability buying a covered good or service is exempt from the 12% value-added tax, and the 20% discount is taken on what is left — not on the posted price. This tool does it in that order, divides a shared bill per head, prints the charge slip, and keeps the sales record with the period total of discounts granted.</p>
+        <div class="who">
+          <span class="pill">Restaurants, caterers, homestays, small hotels, tour operators</span>
+          <span class="pill reg">RA 9994 · RA 10754 · BIR RR 7-2010 / RR 5-2017</span>
+          <span class="pill">Runs offline · one binary</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap prose">
+      <h2>What it does</h2>
+      <p>You enter the bill as it is printed — each line at its posted price, marked as covered by the statute or not — the number of people sharing it, and the qualified buyers with their card numbers. The tool answers with:</p>
+      <ul>
+        <li>the amount due, worked out in the statutory order, with every step shown;</li>
+        <li>the VAT not charged and the discount granted, per buyer;</li>
+        <li>a charge slip in plain text, which is the working an auditor would ask for;</li>
+        <li>one entry per qualified buyer in the sales record;</li>
+        <li>a printable register for any month, quarter or year, and the period total of discounts granted.</li>
+      </ul>
+
+      <h2>The arithmetic, which is the whole point</h2>
+      <p>On a VAT-inclusive bill of ₱1,120.00 for one senior citizen eating alone:</p>
+      <pre><code>Bill as priced (VAT-inclusive)                 1,120.00
+Less 12% VAT — the sale is VAT-exempt           (120.00)
+VAT-exempt selling price                       1,000.00   &lt;- the discount base
+Less 20% statutory discount                     (200.00)
+Amount due                                       800.00</code></pre>
+      <p>Taking 20% off the ₱1,120.00 instead gives ₱896.00, and so does discounting the ₱1,000.00 and then adding the tax back. Both are wrong, and both are common. The order is: <strong>exempt the sale from VAT first, then discount the net amount.</strong></p>
+      <p>On a shared bill, the discount and the exemption reach only what the qualified buyer consumed. Where the bill itemises that, the tool uses it. Where it does not, the bill is divided by the number of people sharing it and the qualified buyer's share is the part that is exempt and discounted — the other shares keep their tax and get nothing off. A ₱2,240.00 bill between four diners, one of them a senior citizen, comes to ₱2,080.00: ₱400.00 from the senior citizen and ₱560.00 from each of the others.</p>
+
+      <h2>Who it's for</h2>
+      <p>Small Philippine establishments that serve walk-in guests and have to grant this discount every day: restaurants and carinderias, caterers, homestays and small hotels, tour operators, and anyone else whose goods or services the two statutes cover. It suits a till with no point-of-sale system, or one whose point-of-sale system gets the order of operations wrong.</p>
+
+      <h2>The rule it implements</h2>
+      <ul>
+        <li><strong>Republic Act 9994</strong> (Expanded Senior Citizens Act of 2010), section 4(a): a 20% discount and exemption from value-added tax on the sale of covered goods and services for the exclusive use and enjoyment of a senior citizen. Implemented by its Implementing Rules and Regulations and by <strong>BIR Revenue Regulations No. 7-2010</strong>.</li>
+        <li><strong>Republic Act 10754</strong> (2016), amending section 32 of <strong>Republic Act 7277</strong> (Magna Carta for Persons with Disability): the same 20% discount and VAT exemption for a person with disability. Implemented by <strong>BIR Revenue Regulations No. 5-2017</strong>.</li>
+        <li><strong>National Internal Revenue Code</strong> of 1997, sections 106 and 108 as amended: the 12% value-added tax the exemption is from.</li>
+        <li>The <strong>Implementing Rules and Regulations of RA 9994</strong>, Rule IV Article 7: group meals and group purchases are divided per head; a purchase already on promotional discount gives the buyer whichever discount is higher, not both.</li>
+        <li><strong>RA 9994 section 4</strong> with RR 7-2010: the establishment claims the discounts it granted as a <em>deduction from gross income</em> for the taxable year they were granted in. It is not a tax credit. The period summary totals exactly that figure.</li>
+      </ul>
+      <p>Every rate and rule above is a named constant in one file, <code>internal/till/statute.go</code>, with its authority in the comment beside it. The VAT rate and the discount rate can be overridden in the tool's settings if the law changes, and each entry keeps the rates it was worked out on, so a change never silently restates a past month.</p>
+
+      <h2>Install &amp; run</h2>
+      <pre><code>git clone https://github.com/sreenivas-sadhu-prabhakara/senior-pwd-discount-compliance-till.git
+cd senior-pwd-discount-compliance-till
+
+# run it
+go run .
+
+# or build the single binary and keep it
+go build -o senior-pwd-till .
+./senior-pwd-till
+
+# then open
+http://127.0.0.1:8080
+
+# options
+./senior-pwd-till -addr 127.0.0.1:9000 -data /path/to/sales-record.json</code></pre>
+      <p>It needs Go 1.25 to build and nothing at all to run. There are no dependencies: the whole tool, interface included, is one file.</p>
+
+      <h2>What it stores</h2>
+      <p>One JSON file beside the binary — <code>senior-pwd-discount-compliance-till-data.json</code> unless you pass <code>-data</code> — holding your establishment's details, the rates in force and the sales record. It is written atomically, so an interrupted save leaves the old file rather than half a new one.</p>
+      <p>The tool binds to <code>127.0.0.1</code>, so only your own machine can reach it. It makes no outbound network calls of any kind: no telemetry, no analytics, no fonts or scripts from anywhere else. Back the data file up the way you back up anything else that matters.</p>
+
+      <h2>Features</h2>
+      <div class="featgrid">
+        <div class="feat">
+          <h3>The right order</h3>
+          <p>VAT exempted first, the 20% taken on the net amount, every step shown on screen and on the slip.</p>
+        </div>
+        <div class="feat">
+          <h3>Shared bills</h3>
+          <p>Per-head division for a group bill, or the buyer's own itemised consumption where the bill shows it.</p>
+        </div>
+        <div class="feat">
+          <h3>Centavo-exact</h3>
+          <p>Amounts are counted in whole centavos and rounded once, so a bill divided between diners never gains or loses a centavo.</p>
+        </div>
+        <div class="feat">
+          <h3>The statutory record</h3>
+          <p>Date, buyer, card number, booklet number, gross, VAT-exempt sales, discount and net — one entry per qualified buyer.</p>
+        </div>
+        <div class="feat">
+          <h3>Printable register</h3>
+          <p>Any month, quarter or year, on screen, as a CSV file, or as plain text with its own column totals.</p>
+        </div>
+        <div class="feat">
+          <h3>The deduction figure</h3>
+          <p>The period total of discounts granted, split by law claimed under and broken down by month.</p>
+        </div>
+        <div class="feat">
+          <h3>Won't record nonsense</h3>
+          <p>An entry whose discount is not 20% of its VAT-exempt amount, or whose net does not follow, is refused.</p>
+        </div>
+        <div class="feat">
+          <h3>Promotion or statute</h3>
+          <p>Enter a promotional discount and it tells you which is higher. It never adds the two together.</p>
+        </div>
+      </div>
+
+      <h2>What it does not do</h2>
+      <p>Stated plainly, because a compliance tool that overstates its reach is worse than none:</p>
+      <ul>
+        <li><strong>It does not decide what qualifies.</strong> Which goods and services the discount and the exemption reach is set by RA 9994, RA 10754 and their implementing rules — medicines, medical and dental services, transport fares, hotels and restaurants, admission fees, funeral services and the rest, each with its own conditions. You mark each line on the bill; the tool does the arithmetic that follows. It also cannot tell you whether a card is genuine or current.</li>
+        <li><strong>It does not implement the 5% discount on basic necessities and prime commodities</strong> under RA 9994 section 4(g), which has its own weekly purchase cap set by joint DTI and DA administrative order, is not accompanied by VAT exemption, and works differently from the 20%. Check the current cap and coverage with the DTI before granting it.</li>
+        <li><strong>It does not handle pre-contracted party packages or bundled meals</strong>, where the implementing rules use a "most expensive meal combination" the establishment sets and adjusts itself. The tool has no figure for that and will not invent one.</li>
+        <li><strong>It does not decide the treatment of a service charge</strong>, or of anything else whose inclusion in the discount base depends on the implementing rules. Mark such a line covered or not covered yourself, on advice.</li>
+        <li><strong>It is not a point-of-sale system and not a BIR return.</strong> It does not issue official receipts, does not number them, does not touch a cash drawer, does not file anything and does not compute your VAT return, your percentage tax or your income tax. It produces the figures and the register; your books and your returns are made up elsewhere.</li>
+        <li><strong>It does not advise on input tax.</strong> Input tax attributable to a VAT-exempt sale is not creditable, and how it is closed to cost or expense is a matter for your accountant.</li>
+        <li><strong>The figures are indicative.</strong> Rates, thresholds and coverage change.</li>
+      </ul>
+
+      <div class="note">
+        The 12% VAT rate, the 20% discount, the per-head split of a shared bill and the deduction treatment are the figures and rules in force when this tool was written, and they are stated in the tool's own settings screen with their authority. Confirm the current ones — and above all which goods and services qualify — with the Bureau of Internal Revenue, your city or municipal Office for Senior Citizens Affairs, and the National Council on Disability Affairs. The statutes and their implementing rules are the authority; this tool is not, and it is not legal or tax advice.
+      </div>
+
+      <details class="assumptions">
+        <summary>The figures and rules this build carries</summary>
+        <ul>
+          <li>Value-added tax rate: <strong>12%</strong> — NIRC sections 106 and 108, as amended. Overridable in settings.</li>
+          <li>Statutory discount: <strong>20%</strong> — RA 9994 section 4(a); RA 10754 amending RA 7277 section 32. Overridable in settings.</li>
+          <li>Order of operations: <strong>exempt from VAT first, discount the VAT-exclusive amount</strong> — BIR RR 7-2010 section 6; RR 5-2017.</li>
+          <li>Shared bill: <strong>one equal share per person</strong>, only the qualified buyers' shares exempt and discounted — IRR of RA 9994, Rule IV Article 7.</li>
+          <li>Discounts per buyer per transaction: <strong>one</strong> — a buyer qualifying under both laws claims it once.</li>
+          <li>Promotional discount: <strong>an alternative to the statutory one</strong>, whichever is higher — IRR of RA 9994, Rule IV Article 7.</li>
+          <li>Discounts granted: <strong>a deduction from gross income</strong> for the taxable year granted, not a tax credit — RA 9994 section 4 with RR 7-2010.</li>
+          <li>Rounding: amounts are held in whole centavos; a half centavo rounds away from zero. The regulations do not prescribe a rounding rule, so this is ordinary commercial rounding, applied once per step.</li>
+          <li>Not statutory, and only there to catch a mistyped figure: a line is capped at ₱100,000,000.00 and a shared bill at 500 people.</li>
+        </ul>
+      </details>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>Open MSME · free, offline tools for micro and small businesses · MIT licensed</span>
+      <a href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+    </div>
+  </footer>
+
+  <script src="assets/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'">
+  <title>Senior citizen and PWD discount till and sales register · Open MSME</title>
+  <meta name="description" content="Work out the 20% senior citizen and PWD discount on the amount net of 12% VAT, in the order the regulations require, and keep the statutory sales record with period totals of the discounts granted.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/accent.css">
+  <link rel="stylesheet" href="assets/layout.css">
+  <script src="assets/theme-init.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <span class="brand"><span class="dot"></span><b>Open MSME</b><span class="tag">senior / PWD till</span></span>
+      <span class="sp"></span>
+      <a class="home" href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+      <button class="themer" data-themer type="button">Theme</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Tourism &amp; hospitality · Philippines</div>
+        <h1>Senior citizen and PWD discount till and sales register for restaurants</h1>
+        <p class="lede">The sale is VAT-exempt first and the 20% discount comes off the amount net of VAT — not off the posted price. This till does it in that order, splits a shared bill per head, and keeps the sales record with the period total of discounts granted.</p>
+        <div class="who">
+          <span class="pill">Restaurants, caterers, homestays, small hotels, tour operators</span>
+          <span class="pill reg">RA 9994 · RA 10754 · BIR RR 7-2010 / RR 5-2017</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <nav class="seg tabs" id="tabs" aria-label="Sections">
+        <button type="button" data-panel="till" aria-pressed="true">Till</button>
+        <button type="button" data-panel="record" aria-pressed="false">Sales record</button>
+        <button type="button" data-panel="period" aria-pressed="false">Discounts granted</button>
+        <button type="button" data-panel="settings" aria-pressed="false">Settings</button>
+      </nav>
+
+      <div class="note" id="banner" hidden></div>
+
+      <!-- Till ------------------------------------------------------------ -->
+      <div id="panel-till">
+        <div class="cols calc">
+          <section class="card">
+            <h2>The bill</h2>
+
+            <div class="row2">
+              <div class="field">
+                <label for="b-date">Date of the transaction</label>
+                <div class="inp"><input type="date" id="b-date"></div>
+              </div>
+              <div class="field">
+                <label for="b-ref">Receipt or invoice no.</label>
+                <div class="inp"><input type="text" id="b-ref" autocomplete="off" placeholder="OR-1003"></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Lines on the bill <span class="hint">price as posted, with VAT inside it if you are VAT-registered</span></label>
+              <div id="lines" class="rows"></div>
+              <div class="btnrow">
+                <button class="btn ghost" id="add-line" type="button">Add a line</button>
+              </div>
+              <p class="assumptions">Whether a good or service is covered is set by RA 9994, RA 10754 and their implementing rules — mark each line yourself. “Covered, no VAT” is for a line that carries no VAT in its own right.</p>
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="b-persons">People sharing the bill <span class="hint">one person eating alone is 1</span></label>
+                <div class="inp"><input type="number" id="b-persons" min="1" step="1" inputmode="numeric" value="1"></div>
+              </div>
+              <div class="field">
+                <label for="b-alloc">Share basis</label>
+                <div class="inp">
+                  <select id="b-alloc">
+                    <option value="per_head">Per head — divide the bill by the headcount</option>
+                    <option value="itemised">Itemised — state what each buyer consumed</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Qualified buyers <span class="hint">name and card number for the sales record</span></label>
+              <div id="buyers" class="rows"></div>
+              <div class="btnrow">
+                <button class="btn ghost" id="add-buyer" type="button">Add a qualified buyer</button>
+              </div>
+            </div>
+
+            <details class="assumptions">
+              <summary>Promotional discount and notes</summary>
+              <div class="row2 spaced">
+                <div class="field">
+                  <label for="b-promo">Promotional discount offered <span class="hint">peso value off the whole bill</span></label>
+                  <div class="inp has-pre"><span class="pre">₱</span><input type="text" id="b-promo" inputmode="decimal" autocomplete="off" placeholder="0.00"></div>
+                </div>
+                <div class="field">
+                  <label for="b-note">Note kept with the transaction</label>
+                  <div class="inp"><input type="text" id="b-note" autocomplete="off" placeholder="two cards shown"></div>
+                </div>
+              </div>
+              <p>A promotional discount and the statutory 20% are alternatives, not things that add up: the buyer takes whichever is higher. Entering one here only says which that is — it never changes the figures charged.</p>
+            </details>
+
+            <div class="btnrow">
+              <button class="btn primary" id="b-quote" type="button">Work out the bill</button>
+              <button class="btn ghost" id="b-record" type="button">Record in the sales record</button>
+              <button class="btn ghost" id="b-clear" type="button">Clear</button>
+            </div>
+          </section>
+
+          <section class="card sticky">
+            <h2>Amount due</h2>
+
+            <div class="result-primary">
+              <div class="k">Total amount due</div>
+              <div class="v" id="r-total">—</div>
+              <div class="sub" id="r-sub">Enter the bill and work it out.</div>
+            </div>
+
+            <div class="table-scroll">
+              <table class="breakdown">
+                <caption class="vis-caption">How the amount due was worked out, in the order the regulations require</caption>
+                <tbody id="r-steps"></tbody>
+              </table>
+            </div>
+
+            <div id="r-buyers"></div>
+            <div id="r-notes"></div>
+
+            <div class="btnrow">
+              <button class="btn ghost" id="r-slip" type="button">Charge slip</button>
+            </div>
+            <pre id="r-sliptext" hidden></pre>
+          </section>
+        </div>
+      </div>
+
+      <!-- Sales record ---------------------------------------------------- -->
+      <div id="panel-record" hidden>
+        <section class="card">
+          <h2>Sales record</h2>
+          <p class="assumptions">The separate record of senior citizen and PWD transactions an establishment keeps to substantiate its exempt sales and the discounts it granted — BIR RR 7-2010 and RR 5-2017.</p>
+
+          <div class="row2">
+            <div class="field">
+              <label for="p-period">Period</label>
+              <div class="inp"><select id="p-period"></select></div>
+            </div>
+            <div class="field">
+              <label>Files</label>
+              <div class="btnrow tight">
+                <a class="btn ghost" id="p-csv" href="/api/register.csv">Download CSV</a>
+                <a class="btn ghost" id="p-txt" href="/api/register.txt">Download text</a>
+                <button class="btn ghost" id="p-print" type="button">Print</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="reg-head" class="printhead" hidden></div>
+          <div class="table-scroll">
+            <table class="breakdown" id="reg-table">
+              <thead><tr id="reg-cols"></tr></thead>
+              <tbody id="reg-rows"></tbody>
+              <tfoot><tr id="reg-totals"></tr></tfoot>
+            </table>
+          </div>
+          <p class="assumptions" id="reg-empty" hidden>No entries fall in this period.</p>
+          <p class="assumptions">Amounts in Philippine pesos. Figures are indicative; confirm the columns and the retention period required of your establishment with the Bureau of Internal Revenue.</p>
+        </section>
+      </div>
+
+      <!-- Discounts granted ----------------------------------------------- -->
+      <div id="panel-period" hidden>
+        <div class="cols calc">
+          <section class="card">
+            <h2>Discounts granted</h2>
+
+            <div class="field">
+              <label for="s-period">Period</label>
+              <div class="inp"><select id="s-period"></select></div>
+            </div>
+
+            <div class="result-primary">
+              <div class="k">Discounts granted — claimed as a deduction from gross income</div>
+              <div class="v" id="s-deduction">—</div>
+              <div class="sub" id="s-sub">—</div>
+            </div>
+
+            <div class="table-scroll">
+              <table class="breakdown">
+                <tbody id="s-totals"></tbody>
+              </table>
+            </div>
+
+            <div class="btnrow">
+              <a class="btn ghost" id="s-txt" href="/api/summary.txt">Download summary</a>
+            </div>
+            <div id="s-notes"></div>
+          </section>
+
+          <section class="card">
+            <h2>By law claimed under</h2>
+            <div class="table-scroll">
+              <table class="breakdown">
+                <thead><tr><th>Figure</th><th class="num">Senior (RA 9994)</th><th class="num">PWD (RA 10754)</th></tr></thead>
+                <tbody id="s-split"></tbody>
+              </table>
+            </div>
+
+            <h2 class="spaced">By month</h2>
+            <div class="table-scroll">
+              <table class="breakdown">
+                <thead><tr><th>Month</th><th class="num">Entries</th><th class="num">VAT-exempt sales</th><th class="num">Discounts</th></tr></thead>
+                <tbody id="s-months"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- Settings -------------------------------------------------------- -->
+      <div id="panel-settings" hidden>
+        <div class="cols calc">
+          <section class="card">
+            <h2>Settings</h2>
+            <form id="form-settings">
+              <div class="row2">
+                <div class="field">
+                  <label for="e-name">Establishment name</label>
+                  <div class="inp"><input type="text" id="e-name" autocomplete="off"></div>
+                </div>
+                <div class="field">
+                  <label for="e-branch">Branch</label>
+                  <div class="inp"><input type="text" id="e-branch" autocomplete="off"></div>
+                </div>
+              </div>
+              <div class="row2">
+                <div class="field">
+                  <label for="e-address">Address</label>
+                  <div class="inp"><input type="text" id="e-address" autocomplete="off"></div>
+                </div>
+                <div class="field">
+                  <label for="e-tin">TIN</label>
+                  <div class="inp"><input type="text" id="e-tin" autocomplete="off" placeholder="123-456-789-0000"></div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="e-vatreg">Registered for value-added tax</label>
+                <div class="inp">
+                  <select id="e-vatreg">
+                    <option value="yes">Yes — prices include VAT, so it comes out before the discount</option>
+                    <option value="no">No — prices carry no VAT, so the discount is taken on the price</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row2">
+                <div class="field">
+                  <label for="e-vat">VAT rate <span class="hint">statutory: 12%</span></label>
+                  <div class="inp has-suf"><input type="number" id="e-vat" min="0" max="100" step="1" inputmode="numeric"><span class="suf">%</span></div>
+                </div>
+                <div class="field">
+                  <label for="e-disc">Statutory discount <span class="hint">statutory: 20%</span></label>
+                  <div class="inp has-suf"><input type="number" id="e-disc" min="1" max="100" step="1" inputmode="numeric"><span class="suf">%</span></div>
+                </div>
+              </div>
+
+              <div class="btnrow">
+                <button class="btn primary" type="submit">Save settings</button>
+              </div>
+            </form>
+            <p class="assumptions">Change the rates only if the law changes. Every entry keeps the rates it was worked out on, so a change here never restates a past month.</p>
+          </section>
+
+          <section class="card">
+            <h2>The figures this build carries</h2>
+            <div class="table-scroll">
+              <table class="breakdown">
+                <tbody id="e-statutory"></tbody>
+              </table>
+            </div>
+            <div class="note">
+              These are the figures in force when this tool was written, and which goods and services qualify is set by statute and by the implementing rules — not by this tool. Confirm both with the Bureau of Internal Revenue, your city or municipal Office for Senior Citizens Affairs, and the National Council on Disability Affairs.
+            </div>
+            <p class="assumptions"><span id="e-entries">—</span> in the sales record, kept in <code id="e-datafile">—</code> on this machine. Nothing is sent anywhere.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>Open MSME · free tools for small businesses · runs offline on your own machine</span>
+      <a href="https://sreenivas-sadhu-prabhakara.github.io/openmsme/">All tools</a>
+    </div>
+  </footer>
+
+  <template id="tpl-line">
+    <div class="rowgrid line">
+      <div class="field"><input type="text" class="l-desc" autocomplete="off" placeholder="Set meal" aria-label="What the line is"></div>
+      <div class="field"><div class="inp has-pre"><span class="pre">₱</span><input type="text" class="l-amount" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Amount as posted"></div></div>
+      <div class="field">
+        <select class="l-kind" aria-label="Whether the statute covers this line">
+          <option value="covered">Covered</option>
+          <option value="covered_novat">Covered, no VAT</option>
+          <option value="not_covered">Not covered</option>
+        </select>
+      </div>
+      <div class="field"><button class="btn ghost drop" type="button" aria-label="Remove this line">Remove</button></div>
+    </div>
+  </template>
+
+  <template id="tpl-buyer">
+    <div class="rowgrid buyer">
+      <div class="field"><input type="text" class="y-name" autocomplete="off" placeholder="Name on the card" aria-label="Buyer name"></div>
+      <div class="field">
+        <select class="y-basis" aria-label="Law claimed under">
+          <option value="senior">Senior citizen · RA 9994</option>
+          <option value="pwd">PWD · RA 10754</option>
+        </select>
+      </div>
+      <div class="field"><input type="text" class="y-id" autocomplete="off" placeholder="ID no." aria-label="Identification number"></div>
+      <div class="field"><input type="text" class="y-booklet" autocomplete="off" placeholder="Booklet no." aria-label="Booklet number"></div>
+      <div class="field y-sharecell"><div class="inp has-pre"><span class="pre">₱</span><input type="text" class="y-share" inputmode="decimal" autocomplete="off" placeholder="Own share" aria-label="What this buyer consumed"></div></div>
+      <div class="field"><button class="btn ghost drop" type="button" aria-label="Remove this buyer">Remove</button></div>
+    </div>
+  </template>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
